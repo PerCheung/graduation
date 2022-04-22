@@ -35,7 +35,6 @@ public class StudentController {
         return R.ok().setData(this.studentService.page(page));
     }
 
-
     /**
      * 通过主键查询单条数据
      */

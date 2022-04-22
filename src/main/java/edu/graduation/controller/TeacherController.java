@@ -35,7 +35,6 @@ public class TeacherController {
         return R.ok().setData(this.teacherService.page(page));
     }
 
-
     /**
      * 通过主键查询单条数据
      */

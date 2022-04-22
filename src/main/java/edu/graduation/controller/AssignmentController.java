@@ -35,7 +35,6 @@ public class AssignmentController {
         return R.ok().setData(this.assignmentService.page(page));
     }
 
-
     /**
      * 通过主键查询单条数据
      */

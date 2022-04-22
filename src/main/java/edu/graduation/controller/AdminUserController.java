@@ -3,7 +3,11 @@ package edu.graduation.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.graduation.domain.AdminUser;
 import edu.graduation.service.AdminUserService;
+import edu.graduation.util.MD5Util;
 import edu.graduation.util.R;
+import edu.graduation.vo.AdminUserVO;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,7 +22,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("adminUser")
+@CrossOrigin(origins = "*")
 public class AdminUserController {
+    /**
+     * 注册验证码
+     */
+    @Value("${adminUser.verify}")
+    private String verify;
 
     /**
      * 服务对象
@@ -35,6 +45,22 @@ public class AdminUserController {
         return R.ok().setData(this.adminUserService.page(page));
     }
 
+    /**
+     * 登录
+     */
+    @GetMapping("login")
+    public R login(@RequestBody AdminUser adminUser) {
+        AdminUser sqlUser;
+        try {
+            sqlUser = this.adminUserService.getById(adminUser.getUserId());
+            if (!sqlUser.getPassword().equals(MD5Util.toMd5(adminUser.getPassword()))) {
+                return R.fail().setData("密码错误");
+            }
+        } catch (NullPointerException e) {
+            return R.fail().setData("用户名不存在");
+        }
+        return R.ok().setData("登录成功");
+    }
 
     /**
      * 通过主键查询单条数据
@@ -48,7 +74,18 @@ public class AdminUserController {
      * 新增数据
      */
     @PostMapping
-    public R save(@RequestBody AdminUser adminUser) {
+    public R save(@RequestBody AdminUserVO adminUserVO) {
+        AdminUser adminUser;
+        try {
+            if (!adminUserVO.getVerify().equals(verify)) {
+                return R.fail().setData("验证码错误");
+            }
+            adminUser = new AdminUser();
+            BeanUtils.copyProperties(adminUserVO, adminUser);
+            adminUser.setPassword(MD5Util.toMd5(adminUser.getPassword()));
+        } catch (NullPointerException e) {
+            return R.fail().setData("未输入验证码");
+        }
         return R.ok().setData(this.adminUserService.save(adminUser));
     }
 

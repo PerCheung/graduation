@@ -35,7 +35,6 @@ public class TopicController {
         return R.ok().setData(this.topicService.page(page));
     }
 
-
     /**
      * 通过主键查询单条数据
      */

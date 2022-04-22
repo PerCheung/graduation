@@ -35,7 +35,6 @@ public class ThesisController {
         return R.ok().setData(this.thesisService.page(page));
     }
 
-
     /**
      * 通过主键查询单条数据
      */
