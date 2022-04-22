@@ -61,14 +61,12 @@ public class Topic implements Serializable {
     @TableField(value = "student_id")
     private String studentId;
 
-    /**创建时间*/
     /**
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
 
-    /**修改时间*/
     /**
      * 修改时间
      */

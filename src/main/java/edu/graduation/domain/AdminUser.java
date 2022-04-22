@@ -22,7 +22,7 @@ public class AdminUser implements Serializable {
     /**
      * 管理员账号
      */
-    @TableId(value = "user_id", type = IdType.AUTO)
+    @TableId(value = "user_id")
     private String userId;
 
     /**
@@ -49,14 +49,12 @@ public class AdminUser implements Serializable {
     @TableField(value = "user_title")
     private String userTitle;
 
-    /**创建时间*/
     /**
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
 
-    /**修改时间*/
     /**
      * 修改时间
      */

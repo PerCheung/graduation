@@ -55,14 +55,12 @@ public class Thesis implements Serializable {
     @TableField(value = "topic_id")
     private Integer topicId;
 
-    /**创建时间*/
     /**
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
 
-    /**修改时间*/
     /**
      * 修改时间
      */

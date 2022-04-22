@@ -22,7 +22,7 @@ public class Teacher implements Serializable {
     /**
      * 教师工号
      */
-    @TableId(value = "teacher_id", type = IdType.AUTO)
+    @TableId(value = "teacher_id")
     private String teacherId;
 
     /**
@@ -79,14 +79,12 @@ public class Teacher implements Serializable {
     @TableField(value = "teacher_email")
     private String teacherEmail;
 
-    /**创建时间*/
     /**
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
 
-    /**修改时间*/
     /**
      * 修改时间
      */

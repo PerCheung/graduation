@@ -22,7 +22,7 @@ public class Student implements Serializable {
     /**
      * 学生学号
      */
-    @TableId(value = "student_id", type = IdType.AUTO)
+    @TableId(value = "student_id")
     private String studentId;
 
     /**
@@ -85,14 +85,12 @@ public class Student implements Serializable {
     @TableField(value = "topic_id")
     private Integer topicId;
 
-    /**创建时间*/
     /**
      * 创建时间
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
 
-    /**修改时间*/
     /**
      * 修改时间
      */
