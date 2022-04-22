@@ -28,5 +28,6 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
   port: 8081
+#注册验证码
 adminUser:
   verify: hn#123
