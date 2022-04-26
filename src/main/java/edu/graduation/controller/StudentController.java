@@ -3,6 +3,7 @@ package edu.graduation.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.graduation.domain.Student;
 import edu.graduation.service.StudentService;
+import edu.graduation.util.MD5Util;
 import edu.graduation.util.R;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("student")
+@CrossOrigin(origins = "*")
 public class StudentController {
 
     /**
@@ -49,6 +51,36 @@ public class StudentController {
     @PostMapping
     public R save(@RequestBody Student student) {
         return R.ok().setData(this.studentService.save(student));
+    }
+
+    /**
+     * 登录
+     */
+    @PostMapping("login")
+    public R login(@RequestBody Student student) {
+        Student sqlStudent;
+        try {
+            sqlStudent = this.studentService.getById(student.getStudentId());
+            if (!sqlStudent.getPassword().equals(MD5Util.toMd5(student.getPassword()))) {
+                return R.fail().setData("密码错误");
+            }
+        } catch (NullPointerException e) {
+            return R.fail().setData("用户名不存在");
+        }
+        return R.ok().setData("登录成功");
+    }
+
+    /**
+     * 注册学生
+     */
+    @PostMapping("/reg")
+    public R reg(@RequestBody Student student) {
+        student.setPassword(MD5Util.toMd5(student.getPassword()));
+        try {
+            return R.ok().setData(this.studentService.save(student));
+        } catch (Exception e) {
+            return R.exp().setData("添加失败，请记得增加学生院系信息");
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package edu.graduation.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.graduation.domain.Teacher;
 import edu.graduation.service.TeacherService;
+import edu.graduation.util.MD5Util;
 import edu.graduation.util.R;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("teacher")
+@CrossOrigin(origins = "*")
 public class TeacherController {
 
     /**
@@ -49,6 +51,36 @@ public class TeacherController {
     @PostMapping
     public R save(@RequestBody Teacher teacher) {
         return R.ok().setData(this.teacherService.save(teacher));
+    }
+
+    /**
+     * 登录
+     */
+    @PostMapping("login")
+    public R login(@RequestBody Teacher teacher) {
+        Teacher sqlTeacher;
+        try {
+            sqlTeacher = this.teacherService.getById(teacher.getTeacherId());
+            if (!sqlTeacher.getPassword().equals(MD5Util.toMd5(teacher.getPassword()))) {
+                return R.fail().setData("密码错误");
+            }
+        } catch (NullPointerException e) {
+            return R.fail().setData("用户名不存在");
+        }
+        return R.ok().setData("登录成功");
+    }
+
+    /**
+     * 注册教师
+     */
+    @PostMapping("/reg")
+    public R reg(@RequestBody Teacher teacher) {
+        teacher.setPassword(MD5Util.toMd5(teacher.getPassword()));
+        try {
+            return R.ok().setData(this.teacherService.save(teacher));
+        } catch (Exception e) {
+            return R.exp().setData("添加失败，请记得增加教师院系信息");
+        }
     }
 
     /**

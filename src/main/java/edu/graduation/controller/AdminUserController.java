@@ -48,7 +48,7 @@ public class AdminUserController {
     /**
      * 登录
      */
-    @GetMapping("login")
+    @PostMapping("login")
     public R login(@RequestBody AdminUser adminUser) {
         AdminUser sqlUser;
         try {
@@ -87,6 +87,21 @@ public class AdminUserController {
             return R.fail().setData("未输入验证码");
         }
         return R.ok().setData(this.adminUserService.save(adminUser));
+    }
+
+
+    /**
+     * 修改密码
+     */
+    @PutMapping("/change")
+    public R updateById(@RequestBody AdminUserVO adminUserVO) {
+        AdminUser sqlUser = this.adminUserService.getById(adminUserVO.getUserId());
+        if (!sqlUser.getPassword().equals(MD5Util.toMd5(adminUserVO.getOldPassword())))
+            return R.fail().setData("原密码错误");
+        AdminUser adminUser = new AdminUser();
+        BeanUtils.copyProperties(adminUserVO, adminUser);
+        adminUser.setPassword(MD5Util.toMd5(adminUserVO.getNewPassword()));
+        return R.ok().setData(this.adminUserService.updateById(adminUser));
     }
 
     /**
