@@ -26,12 +26,12 @@ public class AdminUserVO implements Serializable {
     private String password;
 
     /**
-     * 管理员密码
+     * 管理员旧密码
      */
     private String oldPassword;
 
     /**
-     * 管理员密码
+     * 管理员新密码
      */
     private String newPassword;
 

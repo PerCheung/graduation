@@ -65,7 +65,7 @@ public class AnnouncementController {
      * 单条/批量删除数据
      */
     @DeleteMapping
-    public R delete(@RequestParam List<Long> id) {
+    public R delete(@RequestParam List<Integer> id) {
         return R.ok().setData(this.announcementService.removeByIds(id));
     }
 }

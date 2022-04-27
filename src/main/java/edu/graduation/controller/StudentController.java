@@ -5,6 +5,8 @@ import edu.graduation.domain.Student;
 import edu.graduation.service.StudentService;
 import edu.graduation.util.MD5Util;
 import edu.graduation.util.R;
+import edu.graduation.vo.StudentVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -81,6 +83,20 @@ public class StudentController {
         } catch (Exception e) {
             return R.exp().setData("添加失败，请记得增加学生院系信息");
         }
+    }
+
+    /**
+     * 修改密码
+     */
+    @PutMapping("/change")
+    public R update(@RequestBody StudentVO studentVO) {
+        Student sqlUser = this.studentService.getById(studentVO.getStudentId());
+        if (!sqlUser.getPassword().equals(MD5Util.toMd5(studentVO.getOldPassword())))
+            return R.fail().setData("原密码错误");
+        Student student = new Student();
+        BeanUtils.copyProperties(studentVO, student);
+        student.setPassword(MD5Util.toMd5(studentVO.getNewPassword()));
+        return R.ok().setData(this.studentService.updateById(student));
     }
 
     /**

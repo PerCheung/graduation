@@ -5,6 +5,8 @@ import edu.graduation.domain.Teacher;
 import edu.graduation.service.TeacherService;
 import edu.graduation.util.MD5Util;
 import edu.graduation.util.R;
+import edu.graduation.vo.TeacherVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -81,6 +83,20 @@ public class TeacherController {
         } catch (Exception e) {
             return R.exp().setData("添加失败，请记得增加教师院系信息");
         }
+    }
+
+    /**
+     * 修改密码
+     */
+    @PutMapping("/change")
+    public R update(@RequestBody TeacherVO teacherVO) {
+        Teacher sqlUser = this.teacherService.getById(teacherVO.getTeacherId());
+        if (!sqlUser.getPassword().equals(MD5Util.toMd5(teacherVO.getOldPassword())))
+            return R.fail().setData("原密码错误");
+        Teacher teacher = new Teacher();
+        BeanUtils.copyProperties(teacherVO, teacher);
+        teacher.setPassword(MD5Util.toMd5(teacherVO.getNewPassword()));
+        return R.ok().setData(this.teacherService.updateById(teacher));
     }
 
     /**

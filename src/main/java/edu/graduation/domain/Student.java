@@ -56,10 +56,10 @@ public class Student implements Serializable {
     private String studentMajor;
 
     /**
-     * 性别（1表示男，0表示女）
+     * 性别
      */
     @TableField(value = "sex")
-    private Integer sex;
+    private String sex;
 
     /**
      * 学生电话
