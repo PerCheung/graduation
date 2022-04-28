@@ -86,6 +86,15 @@ public class TeacherController {
     }
 
     /**
+     * 重置密码
+     */
+    @PutMapping("/initialization")
+    public R initialization(@RequestBody Teacher teacher) {
+        teacher.setPassword(MD5Util.toMd5(teacher.getTeacherId()));
+        return R.ok().setData(this.teacherService.updateById(teacher));
+    }
+
+    /**
      * 修改密码
      */
     @PutMapping("/change")

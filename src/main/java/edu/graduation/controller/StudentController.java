@@ -86,6 +86,15 @@ public class StudentController {
     }
 
     /**
+     * 重置密码
+     */
+    @PutMapping("/initialization")
+    public R initialization(@RequestBody Student student) {
+        student.setPassword(MD5Util.toMd5(student.getStudentId()));
+        return R.ok().setData(this.studentService.updateById(student));
+    }
+
+    /**
      * 修改密码
      */
     @PutMapping("/change")
