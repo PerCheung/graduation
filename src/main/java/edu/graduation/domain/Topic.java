@@ -12,13 +12,13 @@ import java.util.Date;
  * 课题(Topic)实体类
  *
  * @author Peter Cheung
- * @since 2022-04-22 22:58:49
+ * @since 2022-04-29 23:33:40
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Topic implements Serializable {
-    private static final long serialVersionUID = 857370840844700202L;
+    private static final long serialVersionUID = -74497812755130628L;
     /**
      * 课题编号
      */
@@ -42,6 +42,12 @@ public class Topic implements Serializable {
      */
     @TableField(value = "topic_source")
     private Integer topicSource;
+
+    /**
+     * 课题主要内容
+     */
+    @TableField(value = "topic_main")
+    private String topicMain;
 
     /**
      * 状态（0表示未审核，1表示通过，2表示不通过）
