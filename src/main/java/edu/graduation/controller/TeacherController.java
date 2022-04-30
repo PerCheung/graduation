@@ -1,7 +1,10 @@
 package edu.graduation.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import edu.graduation.domain.Student;
 import edu.graduation.domain.Teacher;
+import edu.graduation.service.StudentService;
 import edu.graduation.service.TeacherService;
 import edu.graduation.util.MD5Util;
 import edu.graduation.util.R;
@@ -30,6 +33,9 @@ public class TeacherController {
     @Resource
     private TeacherService teacherService;
 
+    @Resource
+    private StudentService studentService;
+
     /**
      * 分页查询所有数据
      */
@@ -37,6 +43,17 @@ public class TeacherController {
     public R page(@RequestParam int current, @RequestParam int size) {
         Page<Teacher> page = new Page<>(current, size);
         return R.ok().setData(this.teacherService.page(page));
+    }
+
+    /**
+     * 查询不是当前学号的老师
+     */
+    @GetMapping("/noStudent/{studentId}")
+    public R getTeacher(@PathVariable String studentId) {
+        QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
+        Student student = studentService.getById(studentId);
+        queryWrapper.ne("teacher_id", student.getTeacherId());
+        return R.ok().setData(this.teacherService.list(queryWrapper));
     }
 
     /**

@@ -1,5 +1,6 @@
 package edu.graduation.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.graduation.domain.Student;
 import edu.graduation.service.StudentService;
@@ -37,6 +38,17 @@ public class StudentController {
     public R page(@RequestParam int current, @RequestParam int size) {
         Page<Student> page = new Page<>(current, size);
         return R.ok().setData(this.studentService.page(page));
+    }
+
+    /**
+     * 分页查询当前教师的学生数据
+     */
+    @GetMapping("teacher")
+    public R page(@RequestParam int current, @RequestParam int size, @RequestParam String teacherId) {
+        Page<Student> page = new Page<>(current, size);
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("teacher_id", teacherId);
+        return R.ok().setData(this.studentService.page(page, queryWrapper));
     }
 
     /**

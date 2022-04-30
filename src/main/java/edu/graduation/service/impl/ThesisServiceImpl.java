@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * 毕业论文(Thesis)表服务实现类
  *
  * @author Peter Cheung
- * @since 2022-04-22 22:58:49
+ * @since 2022-04-30 23:55:14
  */
 @Service("thesisService")
 public class ThesisServiceImpl extends ServiceImpl<ThesisMapper, Thesis> implements ThesisService {

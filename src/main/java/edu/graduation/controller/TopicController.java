@@ -58,7 +58,7 @@ public class TopicController {
     }
 
     /**
-     * 分页查询未审核数据
+     * 分页查询已审核数据
      */
     @GetMapping("Reviewed")
     public R pageR(@RequestParam int current, @RequestParam int size) {
@@ -66,6 +66,28 @@ public class TopicController {
         QueryWrapper<Topic> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("state", 1);
         return R.ok().setData(this.topicService.page(page, queryWrapper));
+    }
+
+    /**
+     * 分页查询已审核但未被选择的数据
+     */
+    @GetMapping("Reviewed/student")
+    public R pageRStudent(@RequestParam int current, @RequestParam int size) {
+        Page<Topic> page = new Page<>(current, size);
+        QueryWrapper<Topic> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("state", 1);
+        queryWrapper.eq("student_id", 0);
+        return R.ok().setData(this.topicService.page(page, queryWrapper));
+    }
+
+    /**
+     * 查询学生的课题数据
+     */
+    @GetMapping("student/My/{studentId}")
+    public R pageStudentTopic(@PathVariable String studentId) {
+        QueryWrapper<Topic> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("student_id", studentId);
+        return R.ok().setData(this.topicService.getOne(queryWrapper));
     }
 
     /**

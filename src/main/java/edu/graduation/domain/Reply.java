@@ -9,21 +9,33 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 毕业论文(Thesis)实体类
+ * 答辩(Reply)实体类
  *
  * @author Peter Cheung
- * @since 2022-04-30 23:53:18
+ * @since 2022-04-30 21:48:22
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Thesis implements Serializable {
-    private static final long serialVersionUID = 929765061184069150L;
+public class Reply implements Serializable {
+    private static final long serialVersionUID = 282348148500761170L;
     /**
      * 学生学号
      */
-    @TableId(value = "student_id", type = IdType.AUTO)
+    @TableId(value = "student_id")
     private String studentId;
+
+    /**
+     * 教师工号
+     */
+    @TableField(value = "teacher_id")
+    private String teacherId;
+
+    /**
+     * 论文文件原始名称
+     */
+    @TableField(value = "thesis_original")
+    private String thesisOriginal;
 
     /**
      * 毕业论文文件名称
@@ -32,10 +44,10 @@ public class Thesis implements Serializable {
     private String thesisName;
 
     /**
-     * 状态（0表示未审核，1表示通过，2表示不通过）
+     * 得分
      */
-    @TableField(value = "state")
-    private Integer state;
+    @TableField(value = "score")
+    private Integer score;
 
     /**
      * 创建时间
@@ -50,14 +62,8 @@ public class Thesis implements Serializable {
     private Date updateTime;
 
     /**
-     * 论文文件原始名称
+     * 逻辑删除
      */
-    @TableField(value = "thesis_original")
-    private String thesisOriginal;
-
-    /**
-     * 是否分配答辩
-     */
-    @TableField(value = "reply")
-    private Integer reply;
+    @TableLogic
+    private Integer deleted;
 }
