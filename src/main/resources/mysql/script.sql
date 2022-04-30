@@ -23,7 +23,7 @@ create table announcement
     update_time        datetime      null comment '修改时间',
     deleted            int default 0 not null comment '逻辑删除'
 )
-    comment '公告' auto_increment = 104;
+    comment '公告';
 
 create table reply
 (
@@ -108,6 +108,6 @@ create table topic
     constraint topic_name
         unique (topic_name)
 )
-    comment '课题' auto_increment = 6;
+    comment '课题';
 
 
