@@ -28,9 +28,6 @@ public class MinIoUtil {
     @Value("${minio.secretKey}")
     private String secretKey;
 
-    @Value("${minio.bucketName}")
-    private String bucketName;
-
     /**
      * 注入minio 客户端
      */
@@ -44,7 +41,7 @@ public class MinIoUtil {
     /**
      * 上传文件
      */
-    public String upload(MultipartFile file) {
+    public String upload(MultipartFile file, String bucketName) {
         //获取上传文件的名称
         String fileName = file.getOriginalFilename();
         //1. 在文件名称里面添加随机唯一值，让每个文件都不一样
@@ -68,7 +65,7 @@ public class MinIoUtil {
     /**
      * 下载文件
      */
-    public void download(String filename, HttpServletResponse res) {
+    public void download(String filename, String bucketName, HttpServletResponse res) {
         GetObjectArgs objectArgs = GetObjectArgs.builder().bucket(bucketName)
                 .object(filename).build();
         try (GetObjectResponse response = minioClient().getObject(objectArgs)) {

@@ -83,7 +83,7 @@ public class ThesisController {
      */
     @GetMapping("download/{filename}")
     public void download(@PathVariable String filename, HttpServletResponse res) {
-        minIoUtil.download(filename, res);
+        minIoUtil.download(filename, "thesis", res);
     }
 
     /**
@@ -105,7 +105,7 @@ public class ThesisController {
         String thesisName;
         try {
             thesisOriginal = file.getOriginalFilename();
-            thesisName = minIoUtil.upload(file);
+            thesisName = minIoUtil.upload(file, "thesis");
         } catch (Exception e) {
             return R.exp().setData("文件上传失败");
         }

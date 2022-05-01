@@ -8,7 +8,6 @@ class GraduationApplicationTests {
 
     @Test
     void contextLoads() {
-
     }
 
 }

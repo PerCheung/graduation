@@ -60,4 +60,10 @@ public class Thesis implements Serializable {
      */
     @TableField(value = "reply")
     private Integer reply;
+
+    /**
+     * 得分
+     */
+    @TableField(value = "score")
+    private Integer score;
 }

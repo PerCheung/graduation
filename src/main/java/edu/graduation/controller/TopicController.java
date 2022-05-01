@@ -141,6 +141,14 @@ public class TopicController {
      */
     @PutMapping("student")
     public R updateStudentTopic(@RequestBody StudentTopicVO studentTopicVO) {
+        if (!studentTopicVO.getStudentId().equals("0")) {
+            QueryWrapper<Topic> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("student_id", studentTopicVO.getStudentId());
+            Topic exist = this.topicService.getOne(queryWrapper);
+            if (exist != null) {
+                return R.fail().setData("你已选择课题");
+            }
+        }
         //为学生绑定教师和课题
         Student student = this.studentService.getById(studentTopicVO.getStudentId());
         student.setTopicId(studentTopicVO.getTopicId());
