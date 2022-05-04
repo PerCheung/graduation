@@ -14,7 +14,7 @@ create table admin_user
 
 create table announcement
 (
-    announcement_id    int auto_increment comment '毕业论文编号'
+    announcement_id int auto_increment comment '公告编号'
         primary key,
     announcement_title varchar(30)   not null comment '公告标题',
     announcement_main  varchar(255)  not null comment '公告内容',

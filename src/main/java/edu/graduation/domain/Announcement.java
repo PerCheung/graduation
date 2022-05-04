@@ -20,7 +20,7 @@ import java.util.Date;
 public class Announcement implements Serializable {
     private static final long serialVersionUID = 669850165712210000L;
     /**
-     * 毕业论文编号
+     * 公告编号
      */
     @TableId(value = "announcement_id", type = IdType.AUTO)
     private Integer announcementId;
